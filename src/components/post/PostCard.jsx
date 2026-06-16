@@ -132,7 +132,7 @@ export function PostCard({ post, onDelete, onUpdate }) {
       {post.stickers && (
         <div
           onClick={() => navigate(`/sticker/${post.stickers.id}`)}
-          className="rounded-3xl overflow-hidden border-2 border-gray-100 dark:border-gray-800 bg-gradient-to-br from-brand-yellow/20 to-brand-blue/20 dark:from-brand-blue/10 dark:to-brand-green/10 cursor-pointer hover:shadow-lg hover:scale-102 transition-all sticker-shine max-w-sm mx-auto"
+          className="rounded-3xl overflow-hidden border-2 border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 cursor-pointer hover:shadow-lg hover:scale-102 transition-all sticker-shine max-w-sm mx-auto"
         >
           {post.stickers.image_url && (
             <img src={post.stickers.image_url} alt={post.stickers.athlete_name}

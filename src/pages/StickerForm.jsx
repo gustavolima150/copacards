@@ -118,7 +118,7 @@ export function StickerForm() {
           <label className="label">Imagem do Atleta</label>
           <div className="flex flex-col gap-2">
             {imagePreview && (
-              <div className="relative rounded-2xl overflow-hidden h-48 bg-gradient-to-br from-brand-green/10 to-brand-blue/10">
+              <div className="relative rounded-2xl overflow-hidden h-48 bg-gray-100 dark:bg-gray-800">
                 <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" onError={() => setImagePreview('')} />
                 <div className="absolute top-2 right-2 bg-black/50 text-white text-2xl px-2 py-1 rounded-lg">
                   {FLAGS[selectedSelection] || '🏳️'}

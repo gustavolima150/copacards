@@ -10,7 +10,7 @@ export function StickerCard({ sticker, onClick, compact = false }) {
       className="sticker-card sticker-shine group relative"
     >
       {/* Image */}
-      <div className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-brand-blue/10 to-brand-green/10 ${compact ? 'h-32' : 'h-48'}`}>
+      <div className={`relative overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 ${compact ? 'h-32' : 'h-48'}`}>
         {sticker.image_url ? (
           <img
             src={sticker.image_url}

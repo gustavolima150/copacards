@@ -55,7 +55,7 @@ export function Feed() {
 
       {/* Welcome banner */}
       {profile && (
-        <div className="rounded-2xl bg-gradient-to-r from-brand-green to-brand-blue p-4 text-white flex items-center gap-3">
+        <div className="rounded-2xl bg-brand-green p-4 text-white flex items-center gap-3">
           <div className="text-3xl">⚽</div>
           <div>
             <p className="font-bold">Olá, {profile.username}!</p>

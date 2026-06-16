@@ -60,7 +60,7 @@ export function StickerDetail() {
       {/* Sticker display */}
       <div className="card overflow-hidden">
         {/* Image */}
-        <div className="relative h-72 bg-gradient-to-br from-brand-blue/10 via-brand-green/10 to-brand-yellow/10">
+        <div className="relative h-72 bg-gray-100 dark:bg-gray-800">
           {sticker.image_url ? (
             <img src={sticker.image_url} alt={sticker.athlete_name} className="w-full h-full object-cover" />
           ) : (

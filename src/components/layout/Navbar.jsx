@@ -31,7 +31,7 @@ export function Navbar() {
       <aside className="hidden md:flex flex-col fixed left-0 top-0 h-full w-64 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 z-40 p-4">
         {/* Logo */}
         <Link to="/feed" className="flex items-center gap-2 mb-8 px-2">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-green to-brand-blue flex items-center justify-center text-white font-black text-lg shadow">
+          <div className="w-10 h-10 rounded-xl bg-brand-green flex items-center justify-center text-white font-black text-lg shadow">
             ⚽
           </div>
           <div>

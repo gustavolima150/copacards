@@ -175,7 +175,7 @@ export function Profile() {
               onClick={() => navigate(`/sticker/${p.stickers?.id}`)}>
               {p.stickers?.image_url
                 ? <img src={p.stickers.image_url} alt="" className="w-16 h-16 rounded-xl object-cover shrink-0" />
-                : <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-brand-green/20 to-brand-blue/20 flex items-center justify-center text-2xl shrink-0">{FLAGS[p.stickers?.selection] || '⚽'}</div>
+                : <div className="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-2xl shrink-0">{FLAGS[p.stickers?.selection] || '⚽'}</div>
               }
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-sm text-gray-900 dark:text-white truncate">{p.stickers?.athlete_name}</p>

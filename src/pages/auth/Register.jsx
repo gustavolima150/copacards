@@ -38,7 +38,7 @@ export function Register() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-dark via-brand-blue to-brand-green p-4">
+    <div className="min-h-screen flex items-center justify-center bg-brand-dark p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="text-6xl mb-2">⚽</div>
