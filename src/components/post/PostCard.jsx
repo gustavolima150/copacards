@@ -24,6 +24,17 @@ export function PostCard({ post, onDelete, onUpdate }) {
   const flag = FLAGS[post.stickers?.selection] || '🏳️'
   const status = STATUS_LABELS[post.stickers?.status]
 
+  // Determina a cor da postagem baseado no hash do ID
+  const getCardColor = () => {
+    const hash = post.id.charCodeAt(0)
+    const colors = [
+      'bg-yellow-50 dark:bg-gray-800', // amarelo
+      'bg-blue-50 dark:bg-gray-800',   // azul
+      'bg-green-50 dark:bg-gray-800',  // verde
+    ]
+    return colors[hash % 3]
+  }
+
   async function toggleLike() {
     if (!user) return
     const newLiked = !liked
@@ -78,16 +89,16 @@ export function PostCard({ post, onDelete, onUpdate }) {
   }, [showComments])
 
   return (
-    <div className="card p-4 flex flex-col gap-3 animate-fade-in">
+    <div className={`card p-5 flex flex-col gap-4 animate-fade-in rounded-3xl border-2 ${getCardColor()}`}>
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pb-2">
         <Link to={`/profile/${post.profiles?.id}`} className="flex items-center gap-2.5 group">
           <Avatar src={post.profiles?.avatar_url} name={post.profiles?.username} size="sm" />
           <div>
             <p className="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-brand-green transition-colors">
               {post.profiles?.username}
             </p>
-            <p className="text-xs text-gray-400">{formatDate(post.created_at)}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{formatDate(post.created_at)}</p>
           </div>
         </Link>
         {isOwner && (
@@ -114,33 +125,35 @@ export function PostCard({ post, onDelete, onUpdate }) {
 
       {/* Caption */}
       {post.caption && (
-        <p className="text-sm text-gray-800 dark:text-gray-200">{post.caption}</p>
+        <p className="text-sm text-gray-800 dark:text-gray-200 font-medium">{post.caption}</p>
       )}
 
       {/* Sticker */}
       {post.stickers && (
         <div
           onClick={() => navigate(`/sticker/${post.stickers.id}`)}
-          className="rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 bg-gradient-to-br from-brand-blue/5 to-brand-green/5 cursor-pointer hover:shadow-md transition-shadow sticker-shine"
+          className="rounded-3xl overflow-hidden border-2 border-gray-100 dark:border-gray-800 bg-gradient-to-br from-brand-yellow/20 to-brand-blue/20 dark:from-brand-blue/10 dark:to-brand-green/10 cursor-pointer hover:shadow-lg hover:scale-102 transition-all sticker-shine max-w-sm mx-auto"
         >
           {post.stickers.image_url && (
             <img src={post.stickers.image_url} alt={post.stickers.athlete_name}
-              className="w-full h-56 object-cover" />
+              className="w-full h-64 object-contain bg-white/80" />
           )}
-          <div className="p-3 flex items-center justify-between">
-            <div>
-              <p className="font-bold text-gray-900 dark:text-white">{flag} {post.stickers.athlete_name}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{post.stickers.selection} · #{post.stickers.shirt_number} · {post.stickers.position}</p>
+          <div className="p-4">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex-1">
+                <p className="font-bold text-base text-gray-900 dark:text-white">{flag} {post.stickers.athlete_name}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400">{post.stickers.selection} · #{post.stickers.shirt_number} · {post.stickers.position}</p>
+              </div>
+              {post.stickers.status && status && (
+                <span className={`badge ${status.color}`}>{status.label}</span>
+              )}
             </div>
-            {post.stickers.status && status && (
-              <span className={`badge ${status.color}`}>{status.label}</span>
-            )}
           </div>
         </div>
       )}
 
       {/* Actions */}
-      <div className="flex items-center gap-4 pt-1">
+      <div className="flex items-center gap-5 pt-2 border-t border-gray-200/50 dark:border-gray-700/50">
         <button onClick={toggleLike}
           className={`flex items-center gap-1.5 text-sm font-medium transition-all active:scale-90 ${
             liked ? 'text-red-500' : 'text-gray-400 hover:text-red-400'
