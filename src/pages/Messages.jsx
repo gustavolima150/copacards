@@ -31,6 +31,77 @@ export function Messages() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  // Real-time listener for messages
+  useEffect(() => {
+    if (!activeConv) return
+
+    const channel = supabase
+      .channel(`messages:${activeConv.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'messages',
+          filter: `conversation_id=eq.${activeConv.id}`,
+        },
+        async (payload) => {
+          const newMessage = payload.new
+          // Fetch full message with profile data
+          const { data: messageWithProfile } = await supabase
+            .from('messages')
+            .select('*, profiles(id, username, avatar_url)')
+            .eq('id', newMessage.id)
+            .single()
+
+          setMessages((prevMessages) => {
+            if (prevMessages.some((m) => m.id === newMessage.id)) {
+              return prevMessages
+            }
+            return [...prevMessages, messageWithProfile]
+          })
+          // Update conversation
+          await supabase
+            .from('conversations')
+            .update({ updated_at: new Date().toISOString() })
+            .eq('id', activeConv.id)
+          loadConversations()
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [activeConv])
+
+  // Real-time listener for conversations
+  useEffect(() => {
+    if (!user) return
+
+    const channel = supabase
+      .channel('conversations:updates')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'conversations',
+        },
+        (payload) => {
+          const updatedConv = payload.new
+          setConversations((prevConvs) =>
+            prevConvs.map((c) => (c.id === updatedConv.id ? { ...c, ...updatedConv } : c))
+          )
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [user])
+
   async function loadConversations() {
     if (!user) return
     setLoading(true)
